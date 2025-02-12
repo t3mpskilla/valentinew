@@ -52,32 +52,33 @@
         <p id="response"></p>
     </div>
     <script>
-        document.getElementById("valentineForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+  document.getElementById("valentineForm").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-            let name = document.getElementById("name").value;
-            let phone = document.getElementById("phone").value;
-            let location = document.getElementById("location").value;
-            let message = document.getElementById("message").value;
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let location = document.getElementById("location").value;
+    let message = document.getElementById("message").value;
 
-            if (name && phone && location && message) {
-                // Send data to Google Sheets
-                fetch('https://script.google.com/macros/s/AKfycbxHelQJD1cvd9M7GebRHdvmyx9Q0S2V09eSkVAZKTKypzeYROB8HINytbrT19VI2XBv/exec', {
-                    method: 'POST',
-                    body: JSON.stringify({ name, phone, location, message }),
-                    headers: { 'Content-Type': 'application/json' }
-                })
-                .then(response => response.text())
-                .then(() => {
-                    document.getElementById("response").innerText = "Thank you, your surprise is on the way! 💕";
-                })
-                .catch(() => {
-                    document.getElementById("response").innerText = "Oops! Something went wrong. Please try again.";
-                });
-            } else {
-                document.getElementById("response").innerText = "Please fill out all fields!";
-            }
-        });
-    </script>
+    if (name && phone && location && message) {
+      // Send data to Google Sheets as query parameters
+      const url = `https://script.google.com/macros/s/AKfycbxHelQJD1cvd9M7GebRHdvmyx9Q0S2V09eSkVAZKTKypzeYROB8HINytbrT19VI2XBv/exec?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&location=${encodeURIComponent(location)}&message=${encodeURIComponent(message)}`;
+      
+      fetch(url, {
+        method: 'GET',
+        redirect: 'follow'
+      })
+      .then(response => response.text())
+      .then(() => {
+        document.getElementById("response").innerText = "Thank you, your surprise is on the way! 💕";
+      })
+      .catch(() => {
+        document.getElementById("response").innerText = "Oops! Something went wrong. Please try again.";
+      });
+    } else {
+      document.getElementById("response").innerText = "Please fill out all fields!";
+    }
+  });
+</script>
 </body>
 </html>
