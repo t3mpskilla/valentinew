@@ -39,10 +39,6 @@
     </style>
 </head>
 <body>
-    <audio autoplay loop>
-        <source src="music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
     <div class="container">
         <h1>Too Shy to Ask Directly 💖</h1>
         <p>Enter your details below for a sweet surprise! 🎁</p>
@@ -65,7 +61,8 @@
             let message = document.getElementById("message").value;
 
             if (name && phone && location && message) {
-                fetch('https://script.google.com/macros/s/AKfycbzvOblwyAT2p4OTuKsXjy4UxvUwsrMPQmUqtiCwnxw/dev', {
+                // Send data to Google Sheets
+                fetch('https://script.google.com/macros/s/AKfycbxHelQJD1cvd9M7GebRHdvmyx9Q0S2V09eSkVAZKTKypzeYROB8HINytbrT19VI2XBv/exec', {
                     method: 'POST',
                     body: JSON.stringify({ name, phone, location, message }),
                     headers: { 'Content-Type': 'application/json' }
